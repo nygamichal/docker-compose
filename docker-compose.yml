@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  panda:
+    image: nginx
+    container_name: nginx-panda
+    ports:
+      - "8080:8080"
+    volumes:
+      - /home/panda/data:/tmp
+  panda2:
+    image: nginx
+    container_name: nginx-panda-2  
