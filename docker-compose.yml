@@ -2,7 +2,15 @@ version: '3.9'
 
 services:
   sleeper:
+    #Auto restart when docker is down.
+    restart: always
+    #Build dockerfile from this path.
     build: ./sleeper
     environment:
     - region=${REGION}
-    - number=${number}
+    #The highest priority for setting env.
+    # 1 - Docker-compose.yml
+    # 2 - Shell
+    # 3 - File .env
+    # 4 - Dockerfile
+    - number=3
