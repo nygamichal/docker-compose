@@ -1,16 +1,12 @@
 version: '3.9'
-
+#By default docker-compose create network -> <project_name>_default
+#file located in folder "compose" means compose_default
 services:
-  sleeper:
-    #Auto restart when docker is down.
-    restart: always
-    #Build dockerfile from this path.
-    build: ./sleeper
-    environment:
-    - region=${REGION}
-    #The highest priority for setting env.
-    # 1 - Docker-compose.yml
-    # 2 - Shell
-    # 3 - File .env
-    # 4 - Dockerfile
-    - number=3
+  #DNS name = nginx
+  nginx:
+    image: nginx
+    deploy:
+      replicas: 2
+  #DNS name = custom_ubuntu
+  custom_ubuntu:
+    build: ./custom_ubuntu
