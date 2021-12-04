@@ -5,3 +5,4 @@ services:
     build: ./sleeper
     environment:
     - region=${REGION}
+    - number=${number}
