@@ -1,13 +1,7 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres
-    environment:
-    - POSTGRES_PASSWORD=${TMP_PASS}
-    - region=${REGION}
-  redis:
-    image: redis
+  sleeper:
+    build: ./sleeper
     environment:
     - region=${REGION}
-    
