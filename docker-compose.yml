@@ -9,8 +9,6 @@ services:
     networks:
       - postgres-network    
 
-    #
-    #
   redis:
     image: redis
     environment:
@@ -29,6 +27,11 @@ services:
       - 8080:80
     networks:
       - redis-network
+  sleeper:
+    build: ./sleeper
+    environment:
+      - number=300
+
 
 networks:
   postgres-network:
