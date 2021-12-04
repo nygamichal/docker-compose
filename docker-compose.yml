@@ -4,10 +4,32 @@ services:
   postgres:
     image: postgres
     environment:
-    - POSTGRES_PASSWORD=${TMP_PASS}
-    - region=${REGION}
+      - POSTGRES_PASSWORD=${TMP_PASS}
+      - region=${REGION}
+    networks:
+      - postgres-network    
+
+    #
+    #
   redis:
     image: redis
     environment:
-    - region=${REGION}
-    
+      - region=${REGION}
+    networks:
+      - redis-network
+      - postgres-network  
+    # nc -zvw 4 postgres 5432
+    # Connection to postgres (172.23.0.2) 5432 port [tcp/*] succeeded!
+    # root@6733e0fc4281:/# nc -zvw 4 redis 6379
+    # Connection to redis (172.24.0.3) 6379 port [tcp/*] succeeded!
+
+  nginx:
+    image: nginx
+    ports:
+      - 8080:80
+    networks:
+      - redis-network
+
+networks:
+  postgres-network:
+  redis-network:    
