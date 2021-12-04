@@ -31,7 +31,9 @@ services:
     build: ./sleeper
     environment:
       - number=300
-
+    #Start after nginx
+    depends_on: 
+      - nginx
 
 networks:
   postgres-network:
