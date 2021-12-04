@@ -5,3 +5,9 @@ services:
     image: postgres
     environment:
     - POSTGRES_PASSWORD=${TMP_PASS}
+    - region=${REGION}
+  redis:
+    image: redis
+    environment:
+    - region=${REGION}
+    
