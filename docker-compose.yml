@@ -1,40 +1,24 @@
 version: '3.9'
 
 services:
-  postgres:
-    image: postgres
-    environment:
-      - POSTGRES_PASSWORD=${TMP_PASS}
-      - region=${REGION}
-    networks:
-      - postgres-network    
-
-  redis:
-    image: redis
-    environment:
-      - region=${REGION}
-    networks:
-      - redis-network
-      - postgres-network  
-    # nc -zvw 4 postgres 5432
-    # Connection to postgres (172.23.0.2) 5432 port [tcp/*] succeeded!
-    # root@6733e0fc4281:/# nc -zvw 4 redis 6379
-    # Connection to redis (172.24.0.3) 6379 port [tcp/*] succeeded!
-
-  nginx:
-    image: nginx
+  jenkins:
+    image: jenkins/jenkins
     ports:
-      - 8080:80
+      - 8880:8080
+      - 50000:50000
+    volumes:
+      - /home/panda/jenkins:/var/jenkins_home
     networks:
-      - redis-network
-  sleeper:
-    build: ./sleeper
-    environment:
-      - number=300
-    #Start after nginx
+      - docker-network    
+
+  ubuntu:
+    #image: ubuntu:18.04
+    build: ./jenkins-ubuntu
+    networks:
+      - docker-network
     depends_on: 
-      - nginx
+      - jenkins
 
 networks:
-  postgres-network:
-  redis-network:    
+  docker-network:
+    driver: bridge
